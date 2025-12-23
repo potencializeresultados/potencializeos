@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: potencialize-os
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn potencialize_core.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: potencialize_db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: DEBUG
+        value: 'False'
+
+databases:
+  - name: potencialize_db
+    databaseName: potencialize
+    user: potencialize_user
+    plan: free # or starter/standard for production
