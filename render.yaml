@@ -2,7 +2,8 @@ services:
   - type: web
     name: potencialize-os
     env: python
-    buildCommand: "./build.sh"
+    rootDir: backend
+    buildCommand: "chmod +x build.sh && ./build.sh"
     startCommand: "gunicorn potencialize_core.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
